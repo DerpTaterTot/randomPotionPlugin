@@ -2,9 +2,10 @@ package dev.cibmc.spigot.randomPotion;
 
 import java.util.Random;
 
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -25,18 +26,25 @@ public class App extends JavaPlugin implements Listener {
                                                         PotionEffectType.SPEED, PotionEffectType.UNLUCK, PotionEffectType.WATER_BREATHING, PotionEffectType.WEAKNESS, PotionEffectType.WITHER}; 
                                                         
     @EventHandler
-    public void onEat(PlayerItemConsumeEvent event) {
+    public void onEat(FoodLevelChangeEvent event) {
         if (event.getItem().getType().name().toLowerCase().contains("potion")) {
             return;
         }
         if (event.getItem().getType().name().toLowerCase().contains("bucket")) {
             return;
         }
+
+        HumanEntity p = event.getEntity();
+
         Random generator = new Random();
         int randomIndex = generator.nextInt(effects.length);
         PotionEffectType effect = effects[randomIndex];
 
-        event.getPlayer().addPotionEffect(new PotionEffect(effect, 30, 2));
+        PotionEffect randomEffect = new PotionEffect(effect, 600, 2);
+
+        p.addPotionEffect(randomEffect);
+
+        p.sendMessage("you got" + effect.getName() + "from eating" + event.getItem().getType().name());
     }
 
     @Override
