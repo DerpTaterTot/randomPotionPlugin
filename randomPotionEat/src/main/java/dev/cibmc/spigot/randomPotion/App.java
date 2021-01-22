@@ -2,6 +2,7 @@ package dev.cibmc.spigot.randomPotion;
 
 import java.util.Random;
 
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,6 +28,10 @@ public class App extends JavaPlugin implements Listener {
                                                         
     @EventHandler
     public void onEat(FoodLevelChangeEvent event) {
+
+        ConsoleCommandSender console = getServer().getConsoleSender();
+        console.sendMessage("gas gas gas gas gas");
+
         if (event.getItem().getType().name().toLowerCase().contains("potion")) {
             return;
         }
@@ -44,7 +49,7 @@ public class App extends JavaPlugin implements Listener {
 
         p.addPotionEffect(randomEffect);
 
-        p.sendMessage("you got" + effect.getName() + "from eating" + event.getItem().getType().name());
+        p.sendMessage("you got " + effect.getName() + " from eating " + event.getItem().getType().name());
     }
 
     @Override

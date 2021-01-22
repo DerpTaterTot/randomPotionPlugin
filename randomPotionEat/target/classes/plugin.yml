@@ -1,3 +1,3 @@
-main: dev.cibmc.spigot.blankplugin.App
+main: dev.cibmc.spigot.randomPotion.App
 name: randomPotion
 version: 0.1
